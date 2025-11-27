@@ -6,8 +6,8 @@ struct Question
 {
     char question[200];
     int score;
-    bool isCorrect;
     bool isBonusQn;
+    int correctOption;
 };
 
 //Function to add score for each correct answer
@@ -24,7 +24,37 @@ void AssignScore(struct Question qn)
     }
 }
 
+//Function to Check if the answer is correct or not
+bool IsCorrectAnswer(struct Question qn, int choice)
+{
+    //Check if the entered choide is the same as the correcty choice
+    if(choice == qn.correctOption)
+    {
+        return true; //If yes then return true
+    }
 
+    return false; //If no, return false
+}
+
+//Function for calculating score(Increase for right answer, Decrease for wrong answer)
+void ScoreSystem(struct Question qn, int currentScore)
+{
+    int negativeScore = 2; //Negative score for normal qns
+    int negativeScoreBonus = 4; //Negative score for bonus qns
+
+    if(!IsCorrectAnswer && !qn.isBonusQn) //Wrong answer and not a bonus qn
+    {
+        currentScore -= negativeScore; //Decrease the currentScore by 2
+    }
+    else if(!IsCorrectAnswer && qn.isBonusQn) //Wrong answer for a bonus question
+    {
+        currentScore -= negativeScoreBonus; //Decrease the currentScore by 4
+    }
+    else //Only remaming condition is the correct answer
+    {
+        currentScore += qn.score; //Increase the current Score by the score assigned by the AssignScore function
+    }
+}
 
 
 

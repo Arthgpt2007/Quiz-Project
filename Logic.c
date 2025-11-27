@@ -11,24 +11,23 @@ struct Question
 };
 
 //Function to add score for each correct answer
-void AssignScore(struct Question qn)
+void AssignScore(struct Question *qn)
 {
-
-    if(qn.isBonusQn)
+    if(qn->isBonusQn)
     {
-        qn.score = 10; //Qn for 10 marks if it is a bonus one(Every 3rd question will be a bonus)
+        qn->score = 10; //Qn for 10 marks if it is a bonus one(Every 3rd question will be a bonus)
     }
     else
     {
-        qn.score = 5; //Qn for 5 marks if it is a normal one
+        qn->score = 5; //Qn for 5 marks if it is a normal one
     }
 }
 
 //Function to Check if the answer is correct or not
-bool IsCorrectAnswer(struct Question qn, int choice)
+IsCorrectAnswer(struct Question *qn, int choice)
 {
     //Check if the entered choide is the same as the correcty choice
-    if(choice == qn.correctOption)
+    if(choice == qn->correctOption)
     {
         return true; //If yes then return true
     }
@@ -37,22 +36,22 @@ bool IsCorrectAnswer(struct Question qn, int choice)
 }
 
 //Function for calculating score(Increase for right answer, Decrease for wrong answer)
-void ScoreSystem(struct Question qn, int currentScore)
+void ScoreSystem(struct Question *qn, int currentScore)
 {
     int negativeScore = 2; //Negative score for normal qns
     int negativeScoreBonus = 4; //Negative score for bonus qns
 
-    if(!IsCorrectAnswer && !qn.isBonusQn) //Wrong answer and not a bonus qn
+    if(!IsCorrectAnswer && !qn->isBonusQn) //Wrong answer and not a bonus qn
     {
         currentScore -= negativeScore; //Decrease the currentScore by 2
     }
-    else if(!IsCorrectAnswer && qn.isBonusQn) //Wrong answer for a bonus question
+    else if(!IsCorrectAnswer && qn->isBonusQn) //Wrong answer for a bonus question
     {
         currentScore -= negativeScoreBonus; //Decrease the currentScore by 4
     }
     else //Only remaming condition is the correct answer
     {
-        currentScore += qn.score; //Increase the current Score by the score assigned by the AssignScore function
+        currentScore += qn->score; //Increase the current Score by the score assigned by the AssignScore function
     }
 }
 
@@ -72,6 +71,45 @@ int main()
     struct Question que9;   
     struct Question que10;   
 
+    //Initilaizing initial scors of all structures as 0
     
+
+    //Assigning every 3rd question as the bonus question
+    que3.isBonusQn = true;
+    
+    que6.isBonusQn = true;
+
+    que9.isBonusQn = true;
+
+    //Assigning the scores to every question
+    AssignScore(&que1);
+    AssignScore(&que2);
+    AssignScore(&que3);
+    AssignScore(&que4);
+    AssignScore(&que5);
+    AssignScore(&que6);
+    AssignScore(&que7);
+    AssignScore(&que8);
+    AssignScore(&que9);
+    AssignScore(&que10);
+
+    //Assigning the correct choice(Answer) to every question
+    
+    
+
+
+    //Score System
+
+
+
+    //Debugging is bonux question if of 10 marks
+    printf("%d", que1.score);
+    printf("%d", que3.score);
+
+    
+
+    return 0;
+
+
 
 }

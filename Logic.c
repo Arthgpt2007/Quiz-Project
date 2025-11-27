@@ -24,7 +24,7 @@ void AssignScore(struct Question *qn)
 }
 
 //Function to Check if the answer is correct or not
-IsCorrectAnswer(struct Question *qn, int choice)
+bool IsCorrectAnswer(struct Question *qn, int choice)
 {
     //Check if the entered choide is the same as the correcty choice
     if(choice == qn->correctOption)
@@ -55,7 +55,10 @@ void ScoreSystem(struct Question *qn, int currentScore)
     }
 }
 
+void MultiplierSystem() //Thinking about it ATM
+{
 
+}
 
 int main()
 {

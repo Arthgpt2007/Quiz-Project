@@ -28,7 +28,7 @@ void GiveInstructions()
 void StartGame()
 {
     //Printing The option for either rules or to start the game
-    printf("Welcome to The QUIZ GAME made my ARTH GUPTA AND TANISH BHADOLA \n");
+    printf("Welcome to The QUIZ GAME made by ARTH GUPTA AND TANISH BHADOLA \n");
     printf("Enter 1 For Rules \n");
     printf("Enter 2 to start the game! \n");
     printf("\n");
@@ -77,38 +77,59 @@ bool IsCorrectAnswer(struct Question *qn, int option)
     return false; //If no, return false
 }
 
-//Function for calculating score(Increase for right answer, Decrease for wrong answer)
-/*void CalculateScore(struct Question *qn, int currentScore)
+//Function To Inititalize All Questions
+void QuestionInitialization(struct Question *que, char *text, int correctOption, bool isBonus)
 {
-    int negativeScore = 2; //Negative score for normal qns
-    int negativeScoreBonus = 4; //Negative score for bonus qns
-
-    if(!IsCorrectAnswer && !qn->isBonusQn) //Wrong answer and not a bonus qn
-    {
-        currentScore -= negativeScore; //Decrease the currentScore by 2
-    }
-    else if(!IsCorrectAnswer && qn->isBonusQn) //Wrong answer for a bonus question
-    {
-        currentScore -= negativeScoreBonus; //Decrease the currentScore by 4
-    }
-    else //Only remaming condition is the correct answer
-    {
-        currentScore += qn->score; //Increase the current Score by the score assigned by the AssignScore function
-    }
-}*/
-
-//Thinking about it ATM
-void MultiplierSystem() 
-{
-
+    strcpy(que->question, text);
+    que->correctOption = correctOption;
+    que->isBonusQn = isBonus;
+    AssignScore(que);
 }
 
-//Thinking About Implementing It
-void RandomBonusGenerator()
+//Function to Display the questions
+void DisplayQuestions(int quesNo, struct Question *que, char options[][50])
 {
+    //Displaying the question number and the question
+    printf("Q%d) %s\n", quesNo, que->question);
 
+    //Displaying The Options
+    for(int i = 0; i < 4; i++)
+    {
+        printf("%d) %s\n", i + 1, options[i]);
+    }
 }
 
+//Function To check the correct answer and add the points or deduct it
+void Evaluate(struct Question *que, int *points, int negNor, int negBon)
+{
+    int choice; //User Entered Choice
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+
+    bool isCorrect = IsCorrectAnswer(&que, choice); //Checking if the user entered option is correct or not
+
+    if(isCorrect)
+    {
+        printf("Well Done! Correct Answer \n");
+        *points += que->score;
+    }
+    else
+    {
+        printf("OOPS! Thats the wrong answer");
+
+        //Deduct Marks based on the ocndition if it is a bonus question or not
+        if(que->isBonusQn)
+        {
+            *points -= negBon;
+        }
+        else
+        {
+            *points -= negNor;
+        }
+    }
+
+    printf("Total Points: %d", *points);
+}
 
 //Main Function
 int main()
@@ -119,343 +140,47 @@ int main()
 
 
     //Initializing 10 different question structures
-    struct Question que1;
-    struct Question que2;   
-    struct Question que3;   
-    struct Question que4;   
-    struct Question que5;   
-    struct Question que6;   
-    struct Question que7;   
-    struct Question que8;   
-    struct Question que9;   
-    struct Question que10;       
+    struct Question ques[10];   
 
-    //Assigning every 3rd question as the bonus question
-    que1.isBonusQn = false;
-    que2.isBonusQn = false;
-    que3.isBonusQn = true;
-    que4.isBonusQn = false;
-    que5.isBonusQn = false;
-    que6.isBonusQn = true;
-    que7.isBonusQn = false;
-    que8.isBonusQn = false;
-    que9.isBonusQn = true;
-    que10.isBonusQn = false;
+    //Initializing all Questions
+    QuestionInitialization(&ques[0], "What is 1 + 2", 1, false);
+    QuestionInitialization(&ques[1], "What is 1 + 2", 3, false);
+    QuestionInitialization(&ques[2], "What is 1 + 2", 2, true);
+    QuestionInitialization(&ques[3], "What is 1 + 2", 4, false);
+    QuestionInitialization(&ques[4], "What is 1 + 2", 1, false);
+    QuestionInitialization(&ques[5], "What is 1 + 2", 4, true);
+    QuestionInitialization(&ques[6], "What is 1 + 2", 3, false);
+    QuestionInitialization(&ques[7], "What is 1 + 2", 4, false);
+    QuestionInitialization(&ques[8], "What is 1 + 2", 2, true);
+    QuestionInitialization(&ques[9], "What is 1 + 2", 1, false);
 
-    //Assigning the scores to every question
-    AssignScore(&que1);
-    AssignScore(&que2);
-    AssignScore(&que3);
-    AssignScore(&que4);
-    AssignScore(&que5);
-    AssignScore(&que6);
-    AssignScore(&que7);
-    AssignScore(&que8);
-    AssignScore(&que9);
-    AssignScore(&que10);
 
-    //Assigning the correct choice(Answer) to every question
-    
-    //FOR TANISH
-    //MAKE THE CORRECT OPTION OF THE QUESTION THE SAME AS THIS
-    que1.correctOption = 1;
-    que2.correctOption = 3;
-    que3.correctOption = 2;
-    que4.correctOption = 4;
-    que5.correctOption = 1;
-    que6.correctOption = 4;
-    que7.correctOption = 3;
-    que8.correctOption = 4;
-    que9.correctOption = 2;
-    que10.correctOption = 1;
-    //MAKE THE CORRECT OPTION SAME AS THIS
+    int points = 0; //Initializing points as 0
+    int negNor = 2; //Negative Marks for Normal Questions
+    int negBon = 4; //Negative Marks for Bonus Questions
 
-    //Assigning The Questions
+    //3-D Array for Options List
+    char options[10][4][80] = {
+        {3, 5, 7, 9},
+        {7, 5, 3, 9},
+        {7, 3, 5, 9},
+        {7, 9, 5, 3},
+        {3, 7, 5, 9},
+        {7, 9, 5, 3},
+        {7, 5, 3, 9},
+        {7, 9, 5, 3},
+        {7, 3, 5, 9},
+        {3, 7, 5, 9}
+    };
 
-    //FOR TANISH
-    //JUST ADD ALL THE QUESTIONS HERE(WITHIN THE DOUBLE QUOTES)
-    strcpy(que1.question, "What is 1 + 2"); //Q1
-    strcpy(que2.question, "What is 1 + 2"); //Q2
-    strcpy(que3.question, "What is 1 + 2"); //Q3
-    strcpy(que4.question, "What is 1 + 2"); //Q4
-    strcpy(que5.question, "What is 1 + 2"); //Q5
-    strcpy(que6.question, "What is 1 + 2"); //Q6
-    strcpy(que7.question, "What is 1 + 2"); //Q7
-    strcpy(que8.question, "What is 1 + 2"); //Q8
-    strcpy(que9.question, "What is 1 + 2"); //Q9
-    strcpy(que10.question, "What is 1 + 2"); //Q10
-    //ADD ALL THE QUESTIONS
-
-    int points = 0; //Calculate the points
-    int choice = 0; //Choice Entered By The User
-    int negNor = 2; //Negative Marks for a wrong answer to a normal question
-    int negBon = 4; //Negative Marks for a wrong answer to a bonus question
-  
-    //FOR TANISH
-    //JUST CHANGE THE CORRECT AND INCORRECT OPTIONS HERE(ELSE ALL LOGIC IS WORKING)
-    //REMEMBER THE CORRECT WILL BE ONE AS ASSIGNED BEFORE
-    //Question 1
-    printf("Q1) %s\n", que1.question);
-    printf("1) 3 \n");
-    printf("2) 5 \n");
-    printf("3) 7 \n");
-    printf("4) 9 \n");
-    printf("Enter Your Choice: \n");
-    scanf("%d", &choice);
-    bool ans1 = IsCorrectAnswer(&que1, choice);
-    
-    if(ans1)
+    //Structure For Questions using For Loop
+    for(int i = 0; i < 10; i++)
     {
-        printf("Well Done! Correct Answer \n");
-        points += que1.score;
-    }
-    else
-    {
-        printf("OOF! That's the wrong answer \n");
-        points -= negNor;
+        DisplayQuestions(i + 1, &ques[i], options[i]);
+        Evaluate(&ques[i], &points, negNor, negBon);
     }
 
-    printf("Total Points: %d \n", points);
 
-    printf("\n");
-
-
-    //Question 2
-    printf("Q2) %s\n", que2.question);
-    printf("1) 7 \n");
-    printf("2) 5 \n");
-    printf("3) 3 \n");
-    printf("4) 9 \n");
-    printf("Enter Your Choice: \n");
-    scanf("%d", &choice);
-    bool ans2 = IsCorrectAnswer(&que2, choice);
-    
-    if(ans2)
-    {
-        printf("Well Done! Correct Answer \n");
-        points += que2.score;
-    }
-    else
-    {
-        printf("OOF! That's the wrong answer \n");
-        points -= negNor;
-    }
-
-    printf("Total Points: %d \n", points);
-
-    printf("\n");
-
-    //Question 3
-    printf("Q3) %s\n", que3.question);
-    printf("1) 7 \n");
-    printf("2) 3 \n");
-    printf("3) 5 \n");
-    printf("4) 9 \n");
-    printf("Enter Your Choice: \n");
-    scanf("%d", &choice);
-    bool ans3 = IsCorrectAnswer(&que3, choice);
-    
-    if(ans3)
-    {
-        printf("Well Done! Correct Answer \n");
-        points += que3.score;
-    }
-    else
-    {
-        printf("OOF! That's the wrong answer \n");
-        points -= negBon;
-    }
-
-    printf("Total Points: %d \n", points);
-
-    printf("\n");
-    
-    //Question 4
-    printf("Q4) %s\n", que4.question);
-    printf("1) 7 \n");
-    printf("2) 9 \n");
-    printf("3) 5 \n");
-    printf("4) 3 \n");
-    printf("Enter Your Choice: \n");
-    scanf("%d", &choice);
-    bool ans4 = IsCorrectAnswer(&que4, choice);
-    
-    if(ans4)
-    {
-        printf("Well Done! Correct Answer \n");
-        points += que4.score;
-    }
-    else
-    {
-        printf("OOF! That's the wrong answer \n");
-        points -= negNor;
-    }
-
-    printf("Total Points: %d \n", points);
-
-    printf("\n");
-
-
-    //Question 5
-    printf("Q5) %s\n", que5.question);
-    printf("1) 3 \n");
-    printf("2) 7 \n");
-    printf("3) 5 \n");
-    printf("4) 9 \n");
-    printf("Enter Your Choice: \n");
-    scanf("%d", &choice);
-    bool ans5 = IsCorrectAnswer(&que5, choice);
-    
-    if(ans5)
-    {
-        printf("Well Done! Correct Answer \n");
-        points += que5.score;
-    }
-    else
-    {
-        printf("OOF! That's the wrong answer \n");
-        points -= negNor;
-    }
-
-    printf("Total Points: %d \n", points);
-
-    printf("\n");
-
-
-    //Question 6
-    printf("Q6) %s\n", que6.question);
-    printf("1) 7 \n");
-    printf("2) 9 \n");
-    printf("3) 5 \n");
-    printf("4) 3 \n");
-    printf("Enter Your Choice: \n");
-    scanf("%d", &choice);
-    bool ans6 = IsCorrectAnswer(&que6, choice);
-    
-    if(ans6)
-    {
-        printf("Well Done! Correct Answer \n");
-        points += que6.score;
-    }
-    else
-    {
-        printf("OOF! That's the wrong answer \n");
-        points -= negBon;
-    }
-
-    printf("Total Points: %d \n", points);
-
-    printf("\n");
-
-
-    //Question 7
-    printf("Q7) %s\n", que7.question);
-    printf("1) 7 \n");
-    printf("2) 5 \n");
-    printf("3) 3 \n");
-    printf("4) 9 \n");
-    printf("Enter Your Choice: \n");
-    scanf("%d", &choice);
-    bool ans7 = IsCorrectAnswer(&que7, choice);
-    
-    if(ans7)
-    {
-        printf("Well Done! Correct Answer \n");
-        points += que7.score;
-    }
-    else
-    {
-        printf("OOF! That's the wrong answer \n");
-        points -= negNor;
-    }
-
-    printf("Total Points: %d \n", points);
-
-    printf("\n");
-
-
-    //Question 8
-    printf("Q8) %s\n", que8.question);
-    printf("1) 7 \n");
-    printf("2) 9 \n");
-    printf("3) 5 \n");
-    printf("4) 3 \n");
-    printf("Enter Your Choice: \n");
-    scanf("%d", &choice);
-    bool ans8 = IsCorrectAnswer(&que8, choice);
-    
-    if(ans8)
-    {
-        printf("Well Done! Correct Answer \n");
-        points += que8.score;
-    }
-    else
-    {
-        printf("OOF! That's the wrong answer \n");
-        points -= negNor;
-    }
-
-    printf("Total Points: %d \n", points);
-
-    printf("\n");
-
-
-
-    //Question 9
-    printf("Q9) %s\n", que9.question);
-    printf("1) 7 \n");
-    printf("2) 3 \n");
-    printf("3) 5 \n");
-    printf("4) 9 \n");
-    printf("Enter Your Choice: \n");
-    scanf("%d", &choice);
-    bool ans9 = IsCorrectAnswer(&que9, choice);
-    
-    if(ans9)
-    {
-        printf("Well Done! Correct Answer \n");
-        points += que9.score;
-    }
-    else
-    {
-        printf("OOF! That's the wrong answer \n");
-        points -= negBon;
-    }
-
-    printf("Total Points: %d \n", points);
-
-    printf("\n");
-
-
-    //Question 10
-    printf("Q10) %s\n", que3.question);
-    printf("1) 3 \n");
-    printf("2) 7 \n");
-    printf("3) 5 \n");
-    printf("4) 9 \n");
-    printf("Enter Your Choice: \n");
-    scanf("%d", &choice);
-    bool ans10 = IsCorrectAnswer(&que10, choice);
-    
-    if(ans10)
-    {
-        printf("Well Done! Correct Answer \n");
-        points += que10.score;
-    }
-    else
-    {
-        printf("OOF! That's the wrong answer \n");
-        points -= negNor;
-    }
-
-    printf("Total Points: %d \n", points);
-
-    printf("\n");
-
-    printf("Thanks For Playing! Hope You Enjoyed, Have A Nice Day! \n");
-
+    printf("Thanks For Playing The Game! Hope You Enjoyed \n");
     return 0;
-
-
-
 }

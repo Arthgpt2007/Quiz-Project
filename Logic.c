@@ -18,8 +18,8 @@ void GiveInstructions()
     printf("2) Every 3RD question will be a BONUS question(More difficult but will both reward and deduce more points) \n");
     printf("3) Every CORRECT answer to a NORMAL question will award 5 points \n");
     printf("4) Every CORRECT answer to a BONUS question will award 10 points \n");
-    printf("5) Every INCORRECT answer to a NORMAL question will deduce 2 points \n");
-    printf("6) Every INCORRECT answer to a BONUS question will deduce 4 points \n");
+    printf("5) Every INCORRECT answer to a NORMAL question will deduct 2 points \n");
+    printf("6) Every INCORRECT answer to a BONUS question will deduct 4 points \n");
     printf("All the Best and have fun! \n");
     printf("\n");
 }
@@ -106,7 +106,7 @@ void Evaluate(struct Question *que, int *points, int negNor, int negBon)
     printf("Enter your choice: ");
     scanf("%d", &choice);
 
-    bool isCorrect = IsCorrectAnswer(&que, choice); //Checking if the user entered option is correct or not
+    bool isCorrect = IsCorrectAnswer(que, choice); //Checking if the user entered option is correct or not
 
     if(isCorrect)
     {
@@ -115,9 +115,9 @@ void Evaluate(struct Question *que, int *points, int negNor, int negBon)
     }
     else
     {
-        printf("OOPS! Thats the wrong answer");
-
-        //Deduct Marks based on the ocndition if it is a bonus question or not
+        printf("OOPS! Thats the wrong answer \n");
+    
+            //Deduct Marks based on the ocndition if it is a bonus question or not
         if(que->isBonusQn)
         {
             *points -= negBon;
@@ -128,7 +128,7 @@ void Evaluate(struct Question *que, int *points, int negNor, int negBon)
         }
     }
 
-    printf("Total Points: %d", *points);
+    printf("Total Points: %d \n", *points);
 }
 
 //Main Function
@@ -160,17 +160,17 @@ int main()
     int negBon = 4; //Negative Marks for Bonus Questions
 
     //3-D Array for Options List
-    char options[10][4][80] = {
-        {3, 5, 7, 9},
-        {7, 5, 3, 9},
-        {7, 3, 5, 9},
-        {7, 9, 5, 3},
-        {3, 7, 5, 9},
-        {7, 9, 5, 3},
-        {7, 5, 3, 9},
-        {7, 9, 5, 3},
-        {7, 3, 5, 9},
-        {3, 7, 5, 9}
+    char options[10][4][50] = {
+        {"3", "5", "7", "9"},
+        {"7", "5", "3", "9"},
+        {"7", "3", "5", "9"},
+        {"7", "9", "5", "3"},
+        {"3", "7", "5", "9"},
+        {"7", "9", "5", "3"},
+        {"7", "5", "3", "9"},
+        {"7", "9", "5", "3"},
+        {"7", "3", "5", "9"},
+        {"3", "7", "5", "9"}
     };
 
     //Structure For Questions using For Loop

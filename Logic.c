@@ -89,6 +89,7 @@ void QuestionInitialization(struct Question *que, char *text, int correctOption,
 //Function to Display the questions
 void DisplayQuestions(int quesNo, struct Question *que, char options[][50])
 {
+    printf("\n");
     //Displaying the question number and the question
     printf("Q%d) %s\n", quesNo, que->question);
 
@@ -143,16 +144,16 @@ int main()
     struct Question ques[10];   
 
     //Initializing all Questions
-    QuestionInitialization(&ques[0], "What is 1 + 2", 1, false);
-    QuestionInitialization(&ques[1], "What is 1 + 2", 3, false);
-    QuestionInitialization(&ques[2], "What is 1 + 2", 2, true);
-    QuestionInitialization(&ques[3], "What is 1 + 2", 4, false);
-    QuestionInitialization(&ques[4], "What is 1 + 2", 1, false);
-    QuestionInitialization(&ques[5], "What is 1 + 2", 4, true);
-    QuestionInitialization(&ques[6], "What is 1 + 2", 3, false);
-    QuestionInitialization(&ques[7], "What is 1 + 2", 4, false);
-    QuestionInitialization(&ques[8], "What is 1 + 2", 2, true);
-    QuestionInitialization(&ques[9], "What is 1 + 2", 1, false);
+    QuestionInitialization(&ques[0], "In the given statement, “hyundai.engine.bolts = 89” ;which of the following is True?", 4, false);
+    QuestionInitialization(&ques[1], "What is the correct syntax to declare a function that returns an integer", 2, false);
+    QuestionInitialization(&ques[2], "If a function does not return any value, it should be declared as:", 4, true);
+    QuestionInitialization(&ques[3], "What does this mode mean?'r'", 2, false);
+    QuestionInitialization(&ques[4], "Which of the following is TRUE about arrays in C?", 2, false);
+    QuestionInitialization(&ques[5], "Which statement accesses the last element of an array named arr of size n?", 4, true);
+    QuestionInitialization(&ques[6], "A function that calls itself is known as:", 1, false);
+    QuestionInitialization(&ques[7], "What is stored in uninitialized array elements?", 2, false);
+    QuestionInitialization(&ques[8], "In C, what is the size of the array arr declared as int arr[10];", 3, true);
+    QuestionInitialization(&ques[9], "What is the correct declaration for a pointer variable that will hold the reference to an opened file in C?", 1, false);
 
 
     int points = 0; //Initializing points as 0
@@ -161,16 +162,16 @@ int main()
 
     //3-D Array for Options List
     char options[10][4][50] = {
-        {"3", "5", "7", "9"},
-        {"7", "5", "3", "9"},
-        {"7", "3", "5", "9"},
-        {"7", "9", "5", "3"},
-        {"3", "7", "5", "9"},
-        {"7", "9", "5", "3"},
-        {"7", "5", "3", "9"},
-        {"7", "9", "5", "3"},
-        {"7", "3", "5", "9"},
-        {"3", "7", "5", "9"}
+        {"bolts is a structure variable", "engine is a structure variable", "hyundai is a structure variable", "both b & c"},
+        {"int function;", "int function()", "function int()", "int function[]"},
+        {"empty", "nil", "void", "null"},
+        {"Write only", "Read only", "Read + Write", "Append"},
+        {"Array size can be changed at runtime", "Array name is a pointer constant", "Arrays can store different data types", "Array indexing starts from 1"},
+        {"arr[n]", "arr[n+1]", "arr[-1]", "arr[n-1]"},
+        {"Recursive function", "Loop function ", "Return function", "Inline function"},
+        {"0", "Garbage value", "-1", "Null"},
+        {"10 bytes", "cannot determine ", "40 bytes", "80 bytes"},
+        {"FILE *file_ptr;", "char *file_ptr;", "struct File *file_ptr;", "int *file_ptr;"}
     };
 
     //Structure For Questions using For Loop
@@ -178,9 +179,10 @@ int main()
     {
         DisplayQuestions(i + 1, &ques[i], options[i]);
         Evaluate(&ques[i], &points, negNor, negBon);
+        printf("\n");
     }
 
-
+    printf("\n");
     printf("Thanks For Playing The Game! Hope You Enjoyed \n");
     return 0;
 }

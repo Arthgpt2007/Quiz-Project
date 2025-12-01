@@ -118,7 +118,7 @@ void Evaluate(struct Question *que, int *points, int negNor, int negBon)
     {
         printf("OOPS! Thats the wrong answer \n");
     
-            //Deduct Marks based on the ocndition if it is a bonus question or not
+        //Deduct Marks based on the ocndition if it is a bonus question or not
         if(que->isBonusQn)
         {
             *points -= negBon;
@@ -144,15 +144,15 @@ int main()
     struct Question ques[10];   
 
     //Initializing all Questions
-    QuestionInitialization(&ques[0], "In the given statement, “hyundai.engine.bolts = 89” ;which of the following is True?", 4, false);
-    QuestionInitialization(&ques[1], "What is the correct syntax to declare a function that returns an integer", 2, false);
-    QuestionInitialization(&ques[2], "If a function does not return any value, it should be declared as:", 4, true);
-    QuestionInitialization(&ques[3], "What does this mode mean?'r'", 2, false);
+    QuestionInitialization(&ques[0], "In the given statement, “hyundai.engine.bolts = 89”; Which of the following is True?", 4, false);
+    QuestionInitialization(&ques[1], "What is the correct syntax to declare a function that returns an integer?", 2, false);
+    QuestionInitialization(&ques[2], "If a function does not return any value, it should be declared as?", 3, true);
+    QuestionInitialization(&ques[3], "What does this mode mean? 'r' ", 2, false);
     QuestionInitialization(&ques[4], "Which of the following is TRUE about arrays in C?", 2, false);
     QuestionInitialization(&ques[5], "Which statement accesses the last element of an array named arr of size n?", 4, true);
-    QuestionInitialization(&ques[6], "A function that calls itself is known as:", 1, false);
+    QuestionInitialization(&ques[6], "A function that calls itself is known as?", 1, false);
     QuestionInitialization(&ques[7], "What is stored in uninitialized array elements?", 2, false);
-    QuestionInitialization(&ques[8], "In C, what is the size of the array arr declared as int arr[10];", 3, true);
+    QuestionInitialization(&ques[8], "In C, what is the size of the array arr declared as int arr[10]; ?", 3, true);
     QuestionInitialization(&ques[9], "What is the correct declaration for a pointer variable that will hold the reference to an opened file in C?", 1, false);
 
 
